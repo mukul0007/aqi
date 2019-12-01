@@ -1,0 +1,28 @@
+@import '../../styles/themify';
+
+.aqi-tooltip {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 10px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+
+    @include themify() {
+        background-color: themed('backgroundColor');
+        color: themed('color');
+    }
+
+    &__header {
+        padding: 10px;
+    }
+
+    &__body {
+        font-size: 12px;
+        font-style: italic;
+        padding: 0 10px 10px;
+    }
+}

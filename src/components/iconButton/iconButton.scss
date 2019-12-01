@@ -1,0 +1,21 @@
+@import '../../styles/themify';
+
+.aqi-icon-button {
+    position: fixed;
+    right: 10px;
+    top: 17.5px;
+    z-index: 999;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+
+    @include themify() {
+        color: themed('color');
+        background-color: themed('backgroundColor');
+    }
+
+    &__icon {
+        width: 20px;
+        height: 20px;
+        margin: 10px;
+    }
+}
