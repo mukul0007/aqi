@@ -1,13 +1,13 @@
 {
   "name": "aqi",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "deck.gl": "^7.3.6",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-map-gl": "^5.1.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "^3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -31,8 +31,6 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^4.13.0",
-    "firebase-admin": "^8.7.0",
-    "firebase-functions": "^3.3.0"
+    "node-sass": "^4.14.1"
   }
 }
