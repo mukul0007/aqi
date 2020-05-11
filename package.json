@@ -4,8 +4,6 @@
   "private": true,
   "dependencies": {
     "deck.gl": "^7.3.6",
-    "firebase-admin": "^8.7.0",
-    "firebase-functions": "^3.3.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-map-gl": "^5.1.2",
@@ -33,6 +31,8 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^4.13.0"
+    "node-sass": "^4.13.0",
+    "firebase-admin": "^8.7.0",
+    "firebase-functions": "^3.3.0"
   }
 }

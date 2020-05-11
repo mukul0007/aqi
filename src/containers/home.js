@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { getAqiData } from '../services/aqiService';
 import { getGeocodeData } from '../services/geocodeSevice';
@@ -9,20 +9,18 @@ import { ThemeSwitcher } from './themeSwitcher';
 
 import { Map } from './map';
 
-export class Home extends Component {
-  state = {
-    loading: false,
-    data:[],
-    error: false
-  };
+export const Home = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [data, setData] = useState([]);
+  const [updatedAt, setUpdatedAt] = useState(null);
 
-  componentDidMount() {
-    //Fetch Data
-    this.fetchAqiData();
-  }
+  useEffect(() => {
+    fetchAqiData()
+  }, []);
 
-  async fetchAqiData() {
-    this.setState({ loading : true});
+  const fetchAqiData = async () => {
+    setLoading(true);
 
     try {
       //Get Aqi data from gov api
@@ -30,40 +28,39 @@ export class Home extends Component {
       const aqiData = [...aqiResponseData[0], ...aqiResponseData[1]];
 
       //Get geocodes and fill them in stations
-      const result = await this.fetchAndFillCoordinateData(aqiData);
+      const result = await fetchAndFillCoordinateData(aqiData);
 
-      this.setState({ data : result, updatedAt: result[0].updatedAt, loading: false });
+      setData(result);
+      setUpdatedAt(result[0].updatedAt);
     } catch (e) {
-      this.setState({ error: true, loading: false });
+      setError(true);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
-  fetchAndFillCoordinateData(aqiData) {
-    const promises = aqiData.map(async ({address, ...others}) => { 
-        try {
-            const [longitude, latitude] = await getGeocodeData(address);
-            return { address, longitude, latitude, ...others };
-        } catch(e) {
-            console.log('Error getting Lat Long ->', e);
-        }
-    });
-    
-    return Promise.all(promises);
-  }
+  return (
+    <>
+      { 
+        loading ? 
+          <Loader /> :
+            error ? <ErrorTitle /> : <Title updatedAt={updatedAt} />
+      }
+      <ThemeSwitcher />
+      <Map data={data}/>
+    </>
+  );
+};
 
-  render() {
-    const { loading, data, updatedAt, error } = this.state;
-
-    return (
-      <>
-        { 
-          loading ? 
-            <Loader /> :
-              error ? <ErrorTitle /> : <Title updatedAt={updatedAt} />
-        }
-        <ThemeSwitcher />
-        <Map data={data}/>
-      </>
-    );
-  }
+function fetchAndFillCoordinateData(aqiData) {
+  const promises = aqiData.map(async ({address, ...others}) => { 
+      try {
+          const [longitude, latitude] = await getGeocodeData(address);
+          return { address, longitude, latitude, ...others };
+      } catch(e) {
+          console.log('Error getting Lat Long ->', e);
+      }
+  });
+  
+  return Promise.all(promises);
 }
