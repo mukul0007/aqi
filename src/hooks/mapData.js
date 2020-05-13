@@ -22,7 +22,7 @@ export function useMapData() {
             //Get geocodes and fill them in stations
             const result = await fetchAndFillCoordinateData(aqiData);
 
-            setData({data: result, updatedAT: result[0].updatedAt});
+            setData({data: result, updatedAt: result[0].updatedAt});
         } catch (e) {
             setError(true);
         } finally {
