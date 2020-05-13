@@ -4,8 +4,9 @@ import { StaticMap } from 'react-map-gl';
 
 import { Marker } from '../components/marker';
 import { Tooltip } from '../components/tooltip';
-import { useUserLocation } from '../services/userLocation';
 import { ThemeContext, Themes } from '../components/theme';
+
+import { useUserLocation } from '../hooks/userLocation';
 
 const INITIAL_VIEW_STATE = {
     longitude: 77.41,
